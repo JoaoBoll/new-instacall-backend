@@ -1,23 +1,31 @@
 package com.example.new_instacall_backend.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import ch.qos.logback.core.util.StringUtil;
+import com.example.new_instacall_backend.domain.entity.BaseEntity;
+import com.example.new_instacall_backend.enums.EntityStatus;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @Entity
-public class Company implements Serializable {
+public class Company extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private String name;
     private String casualName;
+    private String cnpj;
+
+    public String getCasualName() {
+        if (StringUtil.isNullOrEmpty(this.casualName)) {
+            return name;
+        } else {
+            return casualName;
+        }
+    }
+
 }
